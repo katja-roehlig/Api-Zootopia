@@ -1,15 +1,15 @@
-import json
+import get_animal_data as get_data
 
 
-def load_data(file_path):
-    """
-    loads data from json file
+# def load_data(file_path):
+#     """
+#     loads data from json file
 
-    :param file_path
-    :return content of json file
-    """
-    with open(file_path, "r") as handle:
-        return json.load(handle)
+#     :param file_path
+#     :return content of json file
+#     """
+#     with open(file_path, "r") as handle:
+#         return json.load(handle)
 
 
 def get_html_string_for_all_animals(data):
@@ -83,9 +83,14 @@ def create_new_html_page(html_string):
 
 
 def main():
-    animals_data = load_data("animals_data.json")
-    animals_html_string = get_html_string_for_all_animals(animals_data)
-    create_new_html_page(animals_html_string)
+    animals_data, animal = get_data.get_animal_data()
+    if animals_data == []:
+        new_string = f"<h2 class='notfound'>The animal {animal} does not exist.</h2>"
+        create_new_html_page(new_string)
+    else:
+        animals_html_string = get_html_string_for_all_animals(animals_data)
+        create_new_html_page(animals_html_string)
+        print("Website was successfully generated to the file animals.html")
 
 
 if __name__ == "__main__":
