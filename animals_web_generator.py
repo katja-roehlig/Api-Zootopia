@@ -1,15 +1,9 @@
-import get_animal_data as get_data
+import data_fetcher as get_data
 
 
-# def load_data(file_path):
-#     """
-#     loads data from json file
-
-#     :param file_path
-#     :return content of json file
-#     """
-#     with open(file_path, "r") as handle:
-#         return json.load(handle)
+def get_user_choice():
+    user_choice = input("Enter a name of an animal: ")
+    return user_choice.lower()
 
 
 def get_html_string_for_all_animals(data):
@@ -83,10 +77,14 @@ def create_new_html_page(html_string):
 
 
 def main():
-    animals_data, animal = get_data.get_animal_data()
+    animal_name = get_user_choice()
+    animals_data = get_data.get_animal_data(animal_name)
     if animals_data == []:
-        new_string = f"<h2 class='notfound'>The animal {animal} does not exist.</h2>"
+        new_string = (
+            f"<h2 class='notfound'>The animal '{animal_name}' does not exist.</h2>"
+        )
         create_new_html_page(new_string)
+        print("This animal does not exist")
     else:
         animals_html_string = get_html_string_for_all_animals(animals_data)
         create_new_html_page(animals_html_string)
